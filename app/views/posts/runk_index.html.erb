@@ -1,0 +1,19 @@
+<h1>ランキング</h1>
+<% @likes.each do |like| %>
+	<% post = Post.find(like.post_id) %>
+
+	<%= attachment_image_tag post.user, :profile_image, :fill, 60, 60, format: 'jpeg', fallback: "no_image.jpg", size: "60x60" %>
+	<%= link_to post.user.name, user_path(post.user) %><br>
+	<i class="fas fa-heart icon-red"></i>
+	<%= post.likes.count %>
+	<%= post.created_at.strftime("%Y/%m/%d %H:%M") %><br>
+
+	<%= link_to post_path(post) do %>
+		<%= attachment_image_tag post, :image, :fill, 400, 300, format: 'jpeg' %>
+	<% end %>
+	<h4><%= post.title %></h4>
+	<p><%= post.body %></p>
+	<%= link_to "詳細", post_path(post), class: "btn btn-primary" %>
+	<p>-----------------------------------------------------------------------------------------------------------------------------------</p>
+<% end %>
+<%= paginate @likes %>
